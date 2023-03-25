@@ -57,11 +57,11 @@ resource "aws_ecs_service" "contra" {
   }
 
   # Set up the service's load balancer configuration
-  load_balancer {
-    target_group_arn = "arn:aws:elasticloadbalancing:us-east-1:123456789012:targetgroup/contra-tg/abcdef1234567890"
-    container_name   = "contra-container"
-    container_port   = 3000
-  }
+  # load_balancer {
+  #   target_group_arn = "arn:aws:elasticloadbalancing:us-east-1:123456789012:targetgroup/contra-tg/abcdef1234567890"
+  #   container_name   = "contra-container"
+  #   container_port   = 3000
+  # }
 }
 
 

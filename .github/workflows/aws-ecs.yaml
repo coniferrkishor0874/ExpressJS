@@ -8,7 +8,7 @@ on:
 env:
   AWS_REGION: us-east-1                   
   ECR_REPOSITORY: express-demo   
-  ECR_REGISTRY: 079642970547.dkr.ecr.us-east-1.amazonaws.com/express-demo        
+  ECR_REGISTRY: 079642970547.dkr.ecr.us-east-1.amazonaws.com       
 
 permissions:
   contents: read

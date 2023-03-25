@@ -20,7 +20,7 @@ FROM node:14-alpine
 WORKDIR /app
 
 # Copy package.json and yarn.lock into the container at /app
-COPY package.json yarn.lock ./
+COPY package.json ./
 
 # Copy the dependencies from the first stage
 COPY --from=build /app/node_modules ./node_modules

@@ -69,7 +69,7 @@ variable "ecr_repo_url" {}
 
 # Output the URL of the service
 output "service_url" {
-  value = "http://${aws_ecs_service.contra.load_balancer.dns_name}:3000"
+  value = aws_ecs_service.contra.service_url
 }
 
 

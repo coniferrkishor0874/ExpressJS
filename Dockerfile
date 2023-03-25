@@ -8,7 +8,7 @@ WORKDIR /app
 COPY package.json yarn.lock /app/
 
 # Install dependencies using yarn
-RUN yarn install
+RUN yarn install --no-optional && npm cache clean --force
 
 # Copy the rest of the application code to the container
 COPY . /app/
@@ -17,4 +17,4 @@ COPY . /app/
 EXPOSE 3000
 
 # Start the application
-CMD [ "yarn", "start" ]
+CMD ["node", "index.js"]

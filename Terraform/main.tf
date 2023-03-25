@@ -3,41 +3,22 @@ provider "aws" {
   region = "us-east-1"
 }
 
-resource "aws_iam_role" "ecs_task_role" {
-  name = "ecs-task-role"
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Action = "sts:AssumeRole"
-        Effect = "Allow"
-        Principal = {
-          Service = "ecs-tasks.amazonaws.com"
-        }
-      }
-    ]
-  })
-}
-
-resource "aws_iam_role_policy_attachment" "ecs_task_policy" {
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
-  role       = aws_iam_role.ecs_task_role.name
-}
+# 
 
 # Set up the ECS cluster
 resource "aws_ecs_cluster" "contra" {
   name = "contra-cluster"
 
-  setting {
-    name  = "containerInsights"
-    value = "enabled"
-  }
+  # setting {
+  #   name  = "containerInsights"
+  #   value = "enabled"
+  # }
 }
 
 # Set up the ECS task definition
 resource "aws_ecs_task_definition" "contra-express" {
   family                   = "express-task"
-  execution_role_arn       = aws_iam_role.ecs_task_role.arn
+  execution_role_arn       = "arn:aws:iam::079642970547:role/ecs-task-role"
   container_definitions    = jsonencode([
     {
       name                    = "contra-container"
@@ -63,9 +44,9 @@ resource "aws_ecs_service" "contra" {
   name            = "contra-service"
   cluster         = aws_ecs_cluster.contra.id
   task_definition = aws_ecs_task_definition.contra-express.arn
-  depends_on = [
-    aws_ecs_task_definition.contra-express
-  ]
+  # depends_on = [
+  #   aws_ecs_task_definition.contra-express
+  # ]
   desired_count   = 1
 
   # Set up the service's network configuration
@@ -94,7 +75,26 @@ variable "ecr_repo_url" {}
 # }
 
 
+#resource "aws_iam_role" "ecs_task_role" {
+#   name = "ecs-task-role"
+#   assume_role_policy = jsonencode({ 
+#     Version = "2012-10-17"
+#     Statement = [
+#       {
+#         Action = "sts:AssumeRole"
+#         Effect = "Allow"
+#         Principal = {
+#           Service = "ecs-tasks.amazonaws.com"
+#         }
+#       }
+#     ]
+#   })
+# }
 
+# resource "aws_iam_role_policy_attachment" "ecs_task_policy" {
+#   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
+#   role       = aws_iam_role.ecs_task_role.name
+# }
 
 
 

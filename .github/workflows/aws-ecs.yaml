@@ -52,12 +52,14 @@ jobs:
         terraform_version: "1.1.0"
 
     - name: Terraform Init
-      run: terraform init
+      run: |
+      cd Terraform
+      terraform init
 
     - name: Terraform Plan
       id: plan
       run: terraform plan -out=tfplan
-      
+
     - name: Terraform Apply
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       run: terraform apply -auto-approve tfplan

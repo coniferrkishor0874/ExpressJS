@@ -5,7 +5,7 @@ FROM node:14-alpine as build
 WORKDIR /app
 
 # Copy package.json and yarn.lock into the container at /app
-COPY package.json yarn.lock ./
+COPY package.json  ./
 
 # Install dependencies using yarn
 RUN yarn install --frozen-lockfile

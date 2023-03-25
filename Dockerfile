@@ -10,9 +10,6 @@ COPY package.json  ./
 # Install dependencies using yarn
 RUN yarn install --frozen-lockfile
 
-# Remove the node_modules directory to save space
-RUN rm -rf node_modules
-
 # Second, create a new Docker container with only the necessary files
 FROM node:14-alpine
 
@@ -21,9 +18,6 @@ WORKDIR /app
 
 # Copy package.json and yarn.lock into the container at /app
 COPY package.json ./
-
-# Copy the dependencies from the first stage
-COPY --from=build /app/node_modules ./node_modules
 
 # Copy the rest of the application
 COPY . .

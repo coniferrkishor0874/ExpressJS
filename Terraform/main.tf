@@ -26,6 +26,7 @@ resource "aws_ecs_task_definition" "contra-express" {
         {
           container_port = 3000
           host_port      = 3000
+          protocol = "tcp"
         }
       ]
     }

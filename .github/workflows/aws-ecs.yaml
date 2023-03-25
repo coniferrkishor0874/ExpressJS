@@ -51,13 +51,16 @@ jobs:
       with:
         terraform_version: "1.1.0"
 
-    - name: Deploy Terraform infrastructure
-      env:
-        AWS_DEFAULT_REGION: ${{ env.AWS_REGION }}
-      run: |
-        cd Terraform
-        terraform init
-        terraform apply --auto-approve -var "image_tag=helloworld" -var "ecr_repo_url=${{ steps.login-ecr.outputs.registry }}"
+    - name: Terraform Init
+      run: terraform init
+
+    - name: Terraform Plan
+      id: plan
+      run: terraform plan -out=tfplan
+      
+    - name: Terraform Apply
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      run: terraform apply -auto-approve tfplan
 
     - name: Show service URL
       run: |

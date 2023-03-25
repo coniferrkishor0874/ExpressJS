@@ -68,7 +68,7 @@ variable "ecr_repo_url" {}
 
 # Output the URL of the service
 output "service_url" {
-  value = "http://${aws_ecs_service.contra.load_balancers[0].dns_name}:3000"
+  value = "http://${aws_ecs_service.contra.load_balancer[0].dns_name}:3000"
 }
 
 

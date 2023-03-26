@@ -3,12 +3,26 @@ provider "aws" {
   region = "us-east-1"
 }
 
+resource "aws_lb" "contra" {
+  name               = "contra-lb"
+  internal           = false
+  load_balancer_type = "application"
+  subnets          = ["subnet-01e24930", "subnet-45a09408"]
+  security_groups  = ["sg-4054134f"]
+}
+
 resource "aws_lb_target_group" "contra" {
   name_prefix        = "contra"
   port               = 3000
   protocol           = "HTTP"
   target_type        = "ip"
   vpc_id             = "vpc-aaad1dd7"
+}
+
+resource "aws_lb_target_group_attachment" "contra-attach" {
+  target_group_arn = aws_lb_target_group.contra.arn
+  target_id        = aws_lb.contra.id
+  port             = 3000
 }
 
 # Set up the ECS cluster
@@ -51,9 +65,9 @@ resource "aws_ecs_service" "contra" {
   name            = "contra-service"
   cluster         = aws_ecs_cluster.contra.id
   task_definition = aws_ecs_task_definition.contra-express.arn
-  # depends_on = [
-  #   aws_lb_target_group.contra
-  # ]
+  depends_on = [
+      aws_lb_target_group_attachment.contra-attach
+  ]
   desired_count   = 1
 
   # Set up the service's network configuration

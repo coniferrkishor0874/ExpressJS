@@ -32,7 +32,7 @@ resource "aws_lb_target_group" "contra" {
 
 resource "aws_lb_target_group_attachment" "contra-attach" {
   target_group_arn = aws_lb_target_group.contra.arn
-  target_id        = aws_lb.contra.id
+  target_id        = aws_ecs_service.contra.load_balancer[0].target_group_attachment[0].target_id
   port             = 3000
 }
 

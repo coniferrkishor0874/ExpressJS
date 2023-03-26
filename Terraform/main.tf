@@ -28,6 +28,9 @@ resource "aws_lb_target_group" "contra" {
   protocol           = "HTTP"
   target_type        = "ip"
   vpc_id             = "vpc-aaad1dd7"
+  depends_on = [
+    aws_ecs_service.contra
+  ]
 }
 
 resource "aws_lb_target_group_attachment" "contra-attach" {

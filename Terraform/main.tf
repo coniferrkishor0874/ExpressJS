@@ -11,6 +11,17 @@ resource "aws_lb" "contra" {
   security_groups  = ["sg-4054134f"]
 }
 
+resource "aws_lb_listener" "example" {
+  load_balancer_arn = aws_lb.contra.arn
+  port              = "3000"
+  protocol          = "TCP"
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.contra.arn
+  }
+}
+
 resource "aws_lb_target_group" "contra" {
   name_prefix        = "contra"
   port               = 3000

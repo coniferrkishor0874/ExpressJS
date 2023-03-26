@@ -51,9 +51,9 @@ resource "aws_ecs_service" "contra" {
   name            = "contra-service"
   cluster         = aws_ecs_cluster.contra.id
   task_definition = aws_ecs_task_definition.contra-express.arn
-  depends_on = [
-    aws_lb_target_group_attachment.contra,
-  ]
+  # depends_on = [
+  #   aws_lb_target_group.contra
+  # ]
   desired_count   = 1
 
   # Set up the service's network configuration

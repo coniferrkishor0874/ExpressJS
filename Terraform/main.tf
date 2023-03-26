@@ -33,7 +33,7 @@ resource "aws_ecs_task_definition" "contra-express" {
   cpu                      = "256"
   memory                   = "512"
   network_mode             = "awsvpc"
-  
+
   depends_on = [
     aws_ecs_cluster.contra
   ]
@@ -49,8 +49,8 @@ resource "aws_ecs_service" "contra" {
   # Set up the service's network configuration
   network_configuration {
     # assign_public_ip = true
-    subnets          = ["subnet-01e24930", "subnet-45a09408"]
-    security_groups  = ["sg-4054134f"]
+    subnets         = ["subnet-01e24930", "subnet-45a09408"]
+    security_groups = ["sg-4054134f"]
   }
 
 }

@@ -14,7 +14,7 @@ resource "aws_lb" "contra" {
 resource "aws_lb_listener" "example" {
   load_balancer_arn = aws_lb.contra.arn
   port              = "3000"
-  protocol          = "TCP"
+  protocol          = "HTTP"
 
   default_action {
     type             = "forward"
@@ -25,8 +25,8 @@ resource "aws_lb_listener" "example" {
 resource "aws_lb_target_group" "contra" {
   name_prefix        = "contra"
   port               = 3000
-  protocol           = "TCP"
-  target_type = "alb"
+  protocol           = "HTTP"
+  target_type        = "ip"
   vpc_id             = "vpc-aaad1dd7"
 }
 
@@ -40,10 +40,6 @@ resource "aws_lb_target_group_attachment" "contra-attach" {
 resource "aws_ecs_cluster" "contra" {
   name = "contra-cluster"
 
-  # setting {
-  #   name  = "containerInsights"
-  #   value = "enabled"
-  # }
 }
 
 # Set up the ECS task definition

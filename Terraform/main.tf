@@ -14,7 +14,7 @@ resource "aws_lb" "contra" {
 resource "aws_lb_target_group" "contra" {
   name_prefix        = "contra"
   port               = 3000
-  protocol           = "HTTP"
+  protocol           = "TCP"
   target_type = "alb"
   vpc_id             = "vpc-aaad1dd7"
 }

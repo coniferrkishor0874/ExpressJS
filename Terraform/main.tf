@@ -33,6 +33,10 @@ resource "aws_ecs_task_definition" "contra-express" {
   cpu                      = "256"
   memory                   = "512"
   network_mode             = "awsvpc"
+  
+  depends_on = [
+    aws_ecs_cluster.contra
+  ]
 }
 
 # Set up the ECS service

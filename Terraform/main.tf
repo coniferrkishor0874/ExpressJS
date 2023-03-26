@@ -3,41 +3,6 @@ provider "aws" {
   region = "us-east-1"
 }
 
-resource "aws_lb" "contra" {
-  name               = "contra-lb"
-  internal           = false
-  load_balancer_type = "application"
-  subnets          = ["subnet-01e24930", "subnet-45a09408"]
-  security_groups  = ["sg-4054134f"]
-}
-
-resource "aws_lb_listener" "example" {
-  load_balancer_arn = aws_lb.contra.arn
-  port              = "3000"
-  protocol          = "HTTP"
-
-  default_action {
-    type             = "forward"
-    target_group_arn = aws_lb_target_group.contra.arn
-  }
-}
-
-resource "aws_lb_target_group" "contra" {
-  name_prefix        = "contra"
-  port               = 3000
-  protocol           = "HTTP"
-  target_type        = "ip"
-  vpc_id             = "vpc-aaad1dd7"
-  depends_on = [
-    aws_ecs_service.contra
-  ]
-}
-
-resource "aws_lb_target_group_attachment" "contra-attach" {
-  target_group_arn = aws_lb_target_group.contra.arn
-  target_id        = aws_ecs_service.contra.load_balancer[0].target_group_attachment[0].target_id
-  port             = 3000
-}
 
 # Set up the ECS cluster
 resource "aws_ecs_cluster" "contra" {
@@ -47,19 +12,19 @@ resource "aws_ecs_cluster" "contra" {
 
 # Set up the ECS task definition
 resource "aws_ecs_task_definition" "contra-express" {
-  family                   = "express-task"
-  execution_role_arn       = "arn:aws:iam::079642970547:role/ecs-task-role"
-  task_role_arn            = "arn:aws:iam::079642970547:role/ecs-task-role"
-  container_definitions    = jsonencode([
+  family             = "express-task"
+  execution_role_arn = "arn:aws:iam::079642970547:role/ecs-task-role"
+  task_role_arn      = "arn:aws:iam::079642970547:role/ecs-task-role"
+  container_definitions = jsonencode([
     {
-      name                    = "contra-container"
-      image                   = "079642970547.dkr.ecr.us-east-1.amazonaws.com/express-demo:helloworld"
-      memory      = 256
+      name   = "contra-container"
+      image  = "079642970547.dkr.ecr.us-east-1.amazonaws.com/express-demo:helloworld"
+      memory = 256
       portMappings = [
         {
           containerPort = 3000
           hostPort      = 3000
-          protocol = "tcp"
+          protocol      = "tcp"
         }
       ]
     }
@@ -75,9 +40,6 @@ resource "aws_ecs_service" "contra" {
   name            = "contra-service"
   cluster         = aws_ecs_cluster.contra.id
   task_definition = aws_ecs_task_definition.contra-express.arn
-  depends_on = [
-      aws_lb_target_group_attachment.contra-attach
-  ]
   desired_count   = 1
 
   # Set up the service's network configuration
@@ -87,12 +49,6 @@ resource "aws_ecs_service" "contra" {
     security_groups  = ["sg-4054134f"]
   }
 
-  # Set up the service's load balancer configuration
-  load_balancer {
-    target_group_arn = aws_lb_target_group.contra.arn
-    container_name   = "contra-container"
-    container_port   = 3000
-  }
 }
 
 

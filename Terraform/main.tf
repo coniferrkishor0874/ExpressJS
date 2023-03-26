@@ -33,8 +33,8 @@ resource "aws_ecs_task_definition" "contra-express" {
       memory_reservation      = 256
       port_mappings = [
         {
-          container_port = 3000
-          host_port      = 3000
+          containerPort = 3000
+          hostPort      = 3000
           protocol = "tcp"
         }
       ]

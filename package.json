@@ -1,14 +1,13 @@
 {
-    "name": "express-app",
-    "version": "1.0.0",
-    "description": "A simple Express.js app",
-    "main": "index.js",
-    "license": "MIT",
-    "scripts": {
+  "name": "express-app",
+  "version": "1.0.0",
+  "description": "A simple Express.js app",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
     "start": "yarn start"
-    },
-    "dependencies": {
-      "express": "^4.17.1"
-    }
+  },
+  "dependencies": {
+    "express": "^4.17.1"
   }
-  
+}

@@ -20,6 +20,7 @@ resource "aws_ecs_task_definition" "contra-express" {
       name   = "contra-container"
       image  = "079642970547.dkr.ecr.us-east-1.amazonaws.com/express-demo:helloworld"
       memory = 256
+      cpu = 512
       portMappings = [
         {
           containerPort = 3000

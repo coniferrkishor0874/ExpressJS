@@ -8,7 +8,7 @@ on:
 env:
   AWS_REGION: us-east-1                   
   ECR_REPOSITORY: express-demo   
-  # ECR_REGISTRY: 079642970547.dkr.ecr.us-east-1.amazonaws.com       
+  ECR_REGISTRY: 079642970547.dkr.ecr.us-east-1.amazonaws.com       
 
 permissions:
   contents: read
@@ -58,10 +58,6 @@ jobs:
         cd Terraform
         terraform init -upgrade
         terraform apply --auto-approve 
-
-    # - name: Show service URL
-    #   run: |
-    #     echo "Service URL: http://$(terraform output service_url)"
 
 
 

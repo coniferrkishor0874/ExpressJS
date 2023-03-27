@@ -57,7 +57,7 @@ jobs:
       run: |
         cd Terraform
         terraform init -upgrade
-        terraform apply --auto-approve -var="release_version=${{ steps.login-ecr.outputs.registry }}"
+        terraform apply --auto-approve -var="release_version=sample"
 
 
 

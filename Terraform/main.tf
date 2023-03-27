@@ -61,7 +61,7 @@ resource "aws_ecs_service" "contra" {
 
 }
 
-
+variable "image_tag" {}
 
 
 

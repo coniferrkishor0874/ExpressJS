@@ -30,7 +30,7 @@ resource "aws_ecs_task_definition" "contra-express" {
       ]
     }
   ])
-  requires_compatibilities = ["EC2"]
+  requires_compatibilities = ["FARGATE"]
   cpu                      = "256"
   memory                   = "512"
   network_mode             = "awsvpc"
@@ -43,6 +43,7 @@ resource "aws_ecs_service" "contra" {
   cluster         = aws_ecs_cluster.contra.id
   task_definition = aws_ecs_task_definition.contra-express.arn
   desired_count   = 1
+  launch_type     = "FARGATE"
 
   # Set up the service's network configuration
   network_configuration {

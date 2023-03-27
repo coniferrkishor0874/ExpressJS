@@ -61,7 +61,6 @@ resource "aws_ecs_service" "contra" {
 
 }
 
-#
 
 
 

@@ -30,7 +30,7 @@ resource "aws_ecs_task_definition" "contra-express" {
       ]
     }
   ])
-  requires_compatibilities = ["FARGATE"]
+  requires_compatibilities = ["EC2"]
   cpu                      = "256"
   memory                   = "512"
   network_mode             = "awsvpc"

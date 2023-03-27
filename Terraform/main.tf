@@ -3,6 +3,13 @@ provider "aws" {
   region = "us-east-1"
 }
 
+terraform {
+  backend "s3" {
+    bucket = "stater-terraform-bucket"
+    key    = "remote/ecs/state"
+    region = "us-east-1"
+  }
+}
 
 # Set up the ECS cluster
 resource "aws_ecs_cluster" "contra" {

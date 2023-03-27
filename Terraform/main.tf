@@ -46,7 +46,7 @@ resource "aws_ecs_service" "contra" {
 
   # Set up the service's network configuration
   network_configuration {
-    assign_public_ip = true
+    # assign_public_ip = true
     subnets         = ["subnet-01e24930", "subnet-45a09408"]
     security_groups = ["sg-4054134f"]
   }

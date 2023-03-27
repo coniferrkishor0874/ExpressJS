@@ -62,7 +62,7 @@ resource "aws_ecs_service" "contra" {
 }
 
 variable "image_tag" {
-  value= "latest"
+  default= "latest"
 }
 variable "ecr_repo_url" {}
 

@@ -25,7 +25,7 @@ resource "aws_ecs_task_definition" "contra-express" {
   container_definitions = jsonencode([
     {
       name   = "contra-container"
-      image  = "079642970547.dkr.ecr.us-east-1.amazonaws.com/express-demo:helloworld"
+      image  = "079642970547.dkr.ecr.us-east-1.amazonaws.com/express-demo:${var.image_tag}"
       memory = 256
       cpu = 256
       portMappings = [
@@ -61,7 +61,9 @@ resource "aws_ecs_service" "contra" {
 
 }
 
-variable "image_tag" {}
+variable "image_tag" {
+  value= "latest"
+}
 variable "ecr_repo_url" {}
 
 

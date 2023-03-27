@@ -49,7 +49,7 @@ resource "aws_ecs_service" "contra" {
   network_configuration {
     assign_public_ip = true
     subnets         = ["subnet-01e24930", "subnet-45a09408"]
-    security_groups = ["sg-4054134f"]
+    security_groups = ["sg-0e028ca84fbaf152a"]
   }
 
 }

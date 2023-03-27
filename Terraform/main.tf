@@ -39,7 +39,7 @@ resource "aws_ecs_task_definition" "contra-express" {
 
 # Set up the ECS service
 resource "aws_ecs_service" "contra" {
-  name            = "contra-service"
+  name            = "contra-ecs-service"
   cluster         = aws_ecs_cluster.contra.id
   task_definition = aws_ecs_task_definition.contra-express.arn
   desired_count   = 1

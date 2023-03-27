@@ -25,7 +25,7 @@ resource "aws_ecs_task_definition" "contra-express" {
   container_definitions = jsonencode([
     {
       name   = "contra-container"
-      image  = "079642970547.dkr.ecr.us-east-1.amazonaws.com/express-demo:${var.image_tag}"
+      image  = "079642970547.dkr.ecr.us-east-1.amazonaws.com/express-demo:${var.release_version}"
       memory = 256
       cpu = 256
       portMappings = [
@@ -61,10 +61,11 @@ resource "aws_ecs_service" "contra" {
 
 }
 
-variable "image_tag" {
-  default= "latest"
-}
-variable "ecr_repo_url" {}
 
+variable "release_version" {
+  type = string
+  description = "Image version which needs to be deployed"
+  default = ""
+}
 
 
